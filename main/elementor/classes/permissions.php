@@ -18,11 +18,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Permissions {
 
 	public function elementor_permissions_controls( $widget ) {
+
+
 		$section_settings = array(
 			'label' => __( 'Permissions', 'acf-frontend-form-element' ),
 			'tab'   => Controls_Manager::TAB_CONTENT,
-			'admin_forms_select' => '',
 		);
+
+		//if the widget is an instance of ACF_Form, show the condition
+		if ( $widget instanceof \Frontend_Admin\Elementor\Widgets\ACF_Form ) {
+			$section_settings['condition'] = array(
+				'admin_forms_select' => '',
+			);
+		}
 		
 		$widget->start_controls_section( 'permissions_section', $section_settings );
 
@@ -36,7 +44,6 @@ class Permissions {
 			array(
 				'label' => __( 'Permissions', 'acf-frontend-form-element' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
-				
 			)
 		);
 		$this->elementor_controls( $widget );
